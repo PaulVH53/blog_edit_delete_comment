@@ -1,0 +1,23 @@
+{% extends 'home.html' %} 
+
+{% block content %}
+    {{ super() }}
+
+    <div class="container">
+        <form method="POST" action="{{ url_for('edit', id=blog.id) }}">
+            {{ form.hidden_tag() }}
+            <h2>{{ legend }}</h2>
+            <div class="form-control">
+                {{ form.title.label }}
+                {{ form.title() }}
+            </div>
+            <div class="form-control">
+                {{ form.content.label }}
+                <p class="form-content">{{ form.content() }}</p>
+            </div>
+            <div class="form-control">
+                {{ form.submit(class="btn") }}
+            </div>
+        </form>
+    </div>
+{% endblock %}    

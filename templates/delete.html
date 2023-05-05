@@ -1,0 +1,31 @@
+{% extends 'home.html' %} 
+
+{% block content %}
+    {{ super() }}
+    
+    <div class="container">  
+        <form method="POST">
+            <h2>Delete Blog</h2>
+            <div class="post">
+                <h2 class="title">{{ blog.title }}</h2>
+                <hr>
+                <small class="user">Posted by:   {{ blog.author.name }}</small>
+                <small class="date">Date posted: {{ blog.date_posted.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+                {% if blog.date_edited %}
+                <small class="date">Last update: {{ blog.date_edited.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+                {% endif %}
+                {% if blog.comments %}
+                <small class="comments-count">Comments: {{ blog.comments_count }}</small>
+                {% endif %}
+                <hr>
+                <h2 class="title">Post:</h2>
+                <p class="content">{{ blog.content }}</p>
+                {% if current_user.is_authenticated and current_user.id == blog.user_id %}
+                <div class="delete-button">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock %}

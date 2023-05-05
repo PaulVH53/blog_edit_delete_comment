@@ -1,0 +1,41 @@
+{% extends 'home.html' %}
+
+{% block content %}
+    {{ super() }}
+
+    <div class="container">
+        <form action="{{ url_for('comment', blog_id=blog.id) }}" method="POST">
+            {{ form.csrf_token }}
+            <h2>Add Comment</h2>
+            {% if error %}
+            <div class="alert">
+                {{ error }}
+            </div>
+            {% endif %}
+            <div class="form-control">
+                <label for="content">Please, enter your comment to blog "{{ blog.title }}"</label>
+                {{ form.content(class="form-control", rows="5") }}
+            </div>
+            <div class="form-control">
+                <button type="submit" class="btn">Add Comment</button>
+            </div>
+            <div class="form-control">
+                <div class="post">
+                    <h2 class="title">{{ blog.title }}</h2>
+                    <hr>
+                    <small class="user">Posted by:   {{ blog.author.name }}</small>
+                    <small class="date">Date posted: {{ blog.date_posted.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+                    <h2 class="title">Post:</h2>
+                    <p class="content">{{ blog.content }}</p>
+                    {% if current_user.is_authenticated and current_user.id == blog.user_id %}
+                    <div class="delete-button">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+
+        <hr>
+    </div>
+{% endblock %}
